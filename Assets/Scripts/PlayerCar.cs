@@ -32,7 +32,7 @@ public class PlayerCar : MonoBehaviour
     private float motor = 0f;                       // 모터
     private float brake = 0f;                       // 브레이크
 
-    public bool isBrake = false;
+    public bool isBrake = false;                    // 브레이크 밟았나[인스펙터 노출용]
 
     void Start()
     {
@@ -42,16 +42,17 @@ public class PlayerCar : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!GetInOutCar.carInside) return;
+        if (!GetInOutCar.instance.carInside) return;
         CarMoveWheel();
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E) && GetInOutCar.carInside)
-            GetInOutCar.carOutside = true;
-
-        if (!GetInOutCar.carInside) return;
+        if (Input.GetKeyDown(KeyCode.Q) && GetInOutCar.instance.carInside)
+        {
+            GetInOutCar.instance.carOutside = true;
+        }
+        if (!GetInOutCar.instance.carInside) return;
 
         if (Input.GetKey(KeyCode.LeftShift))
             CarBrakeOn();
@@ -105,15 +106,9 @@ public class PlayerCar : MonoBehaviour
     private void CarMoveCondition()
     {
         if (isReverse)              // 후진 상태 
-        {
             motor = -back;              // 모터 토크 설정. 후진 상태에서는 back 값을 사용
-            //brake = forward;            // 브레이크 토크 설정. 후진 상태에서는 forward 값을 사용
-        }
         else                        // 전진 상태
-        {
             motor = forward;            // 모터 토크 설정. 전진 상태에서는 forward 값을 사용
-            //brake = back;               // 브레이크 토크 설정. 전진 상태에서는 back 값을 사용
-        }
     }
 
     private void CarMoveWheel()

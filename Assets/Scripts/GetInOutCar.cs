@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class GetInOutCar : MonoBehaviour
 {
-    public static bool carInside = false;
-    public static bool carOutside = false;
+    public static GetInOutCar instance;
+    public bool carInside = false;
+    public bool carOutside = false;
     private string playerTag = "Player";
     public GameObject fpsPlayer;
     public Transform player;
@@ -14,6 +15,7 @@ public class GetInOutCar : MonoBehaviour
 
     void Start()
     {
+        instance = this;
         fpsPlayer = GameObject.Find(playerTag);
         player = fpsPlayer.transform.GetChild(0).gameObject.transform;
         mainCam = Camera.main;
@@ -25,7 +27,7 @@ public class GetInOutCar : MonoBehaviour
             PlayerGetIn();
     }
 
-    private void PlayerGetIn()
+    public void PlayerGetIn()
     {
         carInside = true;
         player.gameObject.SetActive(false);
