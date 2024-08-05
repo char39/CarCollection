@@ -981,6 +981,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100002, guid: 1e8629ddef7c81b4c81160841a14256a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1150211787}
+    - targetCorrespondingSourceObject: {fileID: 100002, guid: 1e8629ddef7c81b4c81160841a14256a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1150211788}
     - targetCorrespondingSourceObject: {fileID: 100004, guid: 1e8629ddef7c81b4c81160841a14256a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1150211785}
@@ -1048,6 +1051,26 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1150211788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150211786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f46792cee8ff42fc8fb7b1b8e30e853, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frontLeft_Col: {fileID: 736017131}
+  frontRight_Col: {fileID: 981145195}
+  rearLeft_Col: {fileID: 1353830473}
+  rearRight_Col: {fileID: 1803471579}
+  frontLeft_Model: {fileID: 963694719}
+  frontRight_Model: {fileID: 1760051814}
+  rearLeft_Model: {fileID: 190787595}
+  rearRight_Model: {fileID: 1753531048}
 --- !u!1001 &1353830470
 PrefabInstance:
   m_ObjectHideFlags: 0
