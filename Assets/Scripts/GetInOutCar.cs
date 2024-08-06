@@ -7,12 +7,12 @@ public class GetInOutCar : MonoBehaviour
     public static GetInOutCar instance;
     public bool carInside = false;
     public bool carOutside = false;
-    private string playerTag = "Player";
+    //private string playerTag = "Player";
     public GameObject fpsPlayer;
     public Transform player;
-    public Transform carOff;
+    public Transform takeOff;
     public Camera mainCam;
-
+/* 
     void Start()
     {
         instance = this;
@@ -39,7 +39,7 @@ public class GetInOutCar : MonoBehaviour
     {
         carInside = false;
         carOutside = false;
-        fpsPlayer.transform.position = carOff.transform.position + carOff.transform.right * -2;
+        fpsPlayer.transform.position = takeOff.transform.position + takeOff.transform.right * -2;
         player.gameObject.SetActive(true);
         mainCam.depth = -1f;
         fpsPlayer.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Camera>().depth = 0f;
@@ -49,5 +49,5 @@ public class GetInOutCar : MonoBehaviour
     {
         if (carOutside)
             PlayerGetOut();
-    }
+    } */
 }

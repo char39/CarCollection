@@ -22,9 +22,9 @@ public class PlayerCar : MonoBehaviour
     [Header("Max Torque")]
     private float maxTorque = 1000f;                     // 최대 토크
     [Header("Max Brake")]
-    private float maxBrake = 150000f;                      // 최대 브레이크
+    private float maxBrake = 150000f;                    // 최대 브레이크
     [Header("Current Speed")]
-    public float currentSpeed = 0f;                     // 현재 속도
+    public float currentSpeed = 0f;                      // 현재 속도
     private float steer = 0f;                       // 조향
     private float forward = 0f;                     // 전진
     private float back = 0f;                        // 후진
@@ -42,17 +42,17 @@ public class PlayerCar : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!GetInOutCar.instance.carInside) return;
+        //if (!GetInOutCar.instance.carInside) return;
         CarMoveWheel();
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q) && GetInOutCar.instance.carInside)
-        {
-            GetInOutCar.instance.carOutside = true;
-        }
-        if (!GetInOutCar.instance.carInside) return;
+        // if (Input.GetKeyDown(KeyCode.Q) && GetInOutCar.instance.carInside)
+        // {
+        //     GetInOutCar.instance.carOutside = true;
+        // }
+        // if (!GetInOutCar.instance.carInside) return;
 
         if (Input.GetKey(KeyCode.LeftShift))
             CarBrakeOn();
@@ -130,12 +130,16 @@ public class PlayerCar : MonoBehaviour
 
     void CarBrakeOn()
     {
+        CarLightCtrl.backLightsOn = true;
         isBrake = true;
     }
     void CarBrakeOff()
     {
+        if (isReverse) return;
+        CarLightCtrl.backLightsOn = false;
         isBrake = false;
     }
+
 
 
 }

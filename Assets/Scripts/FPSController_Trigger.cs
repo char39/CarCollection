@@ -18,8 +18,8 @@ public class FPSController_Trigger : MonoBehaviour
 
         if (Physics.Raycast(ray, rayDistance))
         {
-            if(Input.GetKeyDown(KeyCode.E) && !GetInOutCar.instance.carInside)
-                GetInOutCar.instance.PlayerGetIn();
+            //if(Input.GetKeyDown(KeyCode.E) && !GetInOutCar.instance.carInside)
+                //GetInOutCar.instance.PlayerGetIn();
         }
     }
 }
