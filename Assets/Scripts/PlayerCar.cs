@@ -1,8 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
-public class PlayerCar : MonoBehaviour
+public class PlayerCar : MonoBehaviourPun, IPunObservable
 {
     [Header("Wheel Colliders")]
     public WheelCollider frontLeft_Col;
@@ -17,6 +17,7 @@ public class PlayerCar : MonoBehaviour
     [Header("Mass Balance")]
     public Vector3 centerOfMass_var = new Vector3(0f, -0.5f, 0f);   // 무게중심 설정. 높이를 조절하여 차량의 무게중심을 조절할 수 있다.
     public Rigidbody rb;
+    private Transform tr;
     [Header("Front Wheel Max Steer Angle")]
     private float maxSteerAngle = 35f;                   // 최대 조향각
     [Header("Max Torque")]
@@ -34,41 +35,80 @@ public class PlayerCar : MonoBehaviour
 
     public bool isBrake = false;                    // 브레이크 밟았나[인스펙터 노출용]
 
+    private Vector3 curPos = Vector3.zero;              // 동기화된 위치값
+    private Quaternion curRot = Quaternion.identity;    // 동기화된 회전값
+
+    void Awake()
+    {
+        photonView.Synchronization = ViewSynchronization.ReliableDeltaCompressed;
+        photonView.ObservedComponents[0] = this;
+        tr = GetComponent<Transform>();
+        rb = GetComponent<Rigidbody>();
+
+        curPos = tr.position;
+        curRot = tr.rotation;
+    }
+    
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.centerOfMass = centerOfMass_var;             // 무게중심 설정
+        if (photonView.IsMine)
+        {
+            rb.centerOfMass = centerOfMass_var;             // 무게중심 설정
+            if (Camera.main.GetComponent<SmoothFollowNew>() != null)
+            {
+                Debug.Log("MainCamera Set");
+                Camera.main.GetComponent<SmoothFollowNew>().target = tr;
+                Camera.main.GetComponent<SmoothFollowNew>().rotationDamping = 3;
+                Camera.main.GetComponent<SmoothFollowNew>().heightDamping = 3;
+            }
+            else
+                Debug.Log("MainCamera null");
+        }
     }
 
     void FixedUpdate()
     {
-        //if (!GetInOutCar.instance.carInside) return;
+        //if (!photonView.IsMine) return;
         CarMoveWheel();
     }
 
     void Update()
     {
-        // if (Input.GetKeyDown(KeyCode.Q) && GetInOutCar.instance.carInside)
-        // {
-        //     GetInOutCar.instance.carOutside = true;
-        // }
-        // if (!GetInOutCar.instance.carInside) return;
+        if (photonView.IsMine)
+        {
+            CarMoveCondition();
+            CarMoveInput();
+            CarLight();
+        }
+        else
+        {
+            tr.position = Vector3.Lerp(tr.position, curPos, Time.deltaTime * 10.0f);
+            tr.rotation = Quaternion.Slerp(tr.rotation, curRot, Time.deltaTime * 10.0f);
+        }
+    }
+
+    private void CarLight()
+    {
+        if (Input.GetKey(KeyCode.LeftShift)) return;
+        if (Input.GetKey(KeyCode.S))
+            CarLightCtrl.backLightsOn = true;
+        else if (!Input.GetKey(KeyCode.S))
+            CarLightCtrl.backLightsOn = false;
 
         if (Input.GetKey(KeyCode.LeftShift))
             CarBrakeOn();
-        else
+        else if (!Input.GetKey(KeyCode.S))
             CarBrakeOff();
-        CarMoveCondition();
-        CarMoveInput();
-        CarLight();
-    }
-
-    private static void CarLight()
-    {
-        if (Input.GetKeyDown(KeyCode.S))
-            CarLightCtrl.backLightsOn = true;
-        else if (Input.GetKeyUp(KeyCode.S))
-            CarLightCtrl.backLightsOn = false;
+        void CarBrakeOn()
+        {
+            isBrake = true;
+            CarLightCtrl.backLightsOn = isBrake;
+        }
+        void CarBrakeOff()
+        {
+            isBrake = false;
+            CarLightCtrl.backLightsOn = isBrake;
+        }
     }
 
     private void CarMoveInput()
@@ -128,18 +168,17 @@ public class PlayerCar : MonoBehaviour
         rearRight_Model.Rotate(rearRight_Col.rpm / 60 * 360 * Time.deltaTime, 0, 0);    // 뒷바퀴 모델의 회전값 설정. rpm 값에 따라 회전
     }
 
-    void CarBrakeOn()
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        CarLightCtrl.backLightsOn = true;
-        isBrake = true;
+        if (stream.IsWriting)
+        {
+            stream.SendNext(tr.position);
+            stream.SendNext(tr.rotation);
+        }
+        else if (stream.IsReading)
+        {
+            curPos = (Vector3)stream.ReceiveNext();
+            curRot = (Quaternion)stream.ReceiveNext();
+        }
     }
-    void CarBrakeOff()
-    {
-        if (isReverse) return;
-        CarLightCtrl.backLightsOn = false;
-        isBrake = false;
-    }
-
-
-
 }

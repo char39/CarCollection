@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
@@ -21,11 +20,42 @@ public class Photon_InitialSet : MonoBehaviourPunCallbacks
         {
             JoinRandomButton.interactable = false;
             PhotonNetwork.GameVersion = gameVersion;
-            PhotonNetwork.AutomaticallySyncScene = true;
+            //PhotonNetwork.AutomaticallySyncScene = true;
             PhotonNetwork.ConnectUsingSettings();
             Log.text = "Connect to Master Server...";
         }
     }
+
+    public override void OnConnectedToMaster()
+    {
+        Log.text = "Online : Master Server Connected!";
+        UserID.text = GetUserID();
+        PhotonNetwork.JoinLobby();
+    }
+    public override void OnJoinedLobby()
+    {
+        Log.text = "Lobby Joined!";
+        JoinRandomButton.interactable = true;
+    }
+    public override void OnCreatedRoom()
+    {
+        Log.text = "Create Room Success!";
+    }
+    public override void OnJoinedRoom()
+    {
+        Log.text = "Join Room Success!";
+        StartCoroutine(LoadScene());
+    }
+    public override void OnJoinRandomFailed(short returnCode, string message)
+    {
+        Log.text = "Error : Join Random Room Failed!";
+        PhotonNetwork.CreateRoom("MyRoom", new RoomOptions { MaxPlayers = 4 });
+    }
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        Log.text = "Error : Create Room Failed!";
+    }
+
 
     private string GetUserID()
     {
@@ -34,23 +64,6 @@ public class Photon_InitialSet : MonoBehaviourPunCallbacks
             userID = "UserID_" + Random.Range(0, 999).ToString("000");
         return userID;
     }
-
-    public override void OnConnectedToMaster()
-    {
-        Log.text = "Online : Master Server Connected!";
-        PhotonNetwork.JoinLobby();
-    }
-    public override void OnJoinedLobby()
-    {
-        Log.text = "Online : Lobby Joined!";
-        UserID.text = GetUserID();
-        JoinRandomButton.interactable = true;
-    }
-    public override void OnJoinRandomFailed(short returnCode, string message)
-    {
-        Log.text = "Online : Room Join Failed!";
-        PhotonNetwork.CreateRoom("MyRoom", new RoomOptions { MaxPlayers = 10 });
-    }
     public void OnClickJoinRandomRoom()
     {
         JoinRandomButton.interactable = false;
@@ -58,19 +71,12 @@ public class Photon_InitialSet : MonoBehaviourPunCallbacks
         PlayerPrefs.SetString("UserID", UserID.text);
         PhotonNetwork.JoinRandomRoom();
     }
-    public override void OnJoinedRoom()
-    {
-        Log.text = "Online : Room Joined!";
-        StartCoroutine(LoadScene());
-    }
-
     private IEnumerator LoadScene()
     {
         PhotonNetwork.IsMessageQueueRunning = false;
         AsyncOperation ao = SceneManager.LoadSceneAsync("F1TrackDisplayScene");
         yield return ao;
     }
-
     private void OnGUI()
     {
         GUILayout.Label(PhotonNetwork.NetworkClientState.ToString());

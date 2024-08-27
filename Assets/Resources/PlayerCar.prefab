@@ -901,7 +901,7 @@ GameObject:
   - component: {fileID: 63542091131988930}
   m_Layer: 0
   m_Name: PlayerCar
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1006,10 +1006,11 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 1
+  Synchronization: 2
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
+  - {fileID: 351553131649039337}
   - {fileID: 63542091131988930}
   sceneViewId: 0
   InstantiationId: 0
