@@ -34,7 +34,7 @@ public class Path : MonoBehaviour
                 previousNode = Nodes[Nodes.Count - 1].position;                 // 이전 노드의 위치를 마지막 노드의 위치로 설정합니다.
             }
             Gizmos.DrawLine(previousNode, currentNode);                     // 이전 노드와 현재 노드를 선으로 연결합니다.
-            Gizmos.DrawWireSphere(currentNode, 0.3f);                       // 현재 노드를 원으로 그립니다.
+            Gizmos.DrawWireSphere(currentNode, 3f);                       // 현재 노드를 원으로 그립니다.
         }
     }
 

@@ -25,6 +25,16 @@ public class AICar : MonoBehaviour
     [SerializeField] private Transform FrontR_Tr;
     [SerializeField] private Transform BackL_Tr;
     [SerializeField] private Transform BackR_Tr;
+    
+    [Header("Obstacle")]
+    [SerializeField] private float sensorLength = 10f;
+    [SerializeField] private Vector3 sensorFrontPos = new(0f, 0.5f, 0f);    // 전방 센서 위치
+    [SerializeField] private Transform sensorStartPos;                      // 센서 시작 위치
+    [SerializeField] private float sideSensorFrontPos = 0.2f;               // 측면 전방 센서 위치
+    [SerializeField] private float sideSensorFrontAngle = 30f;              // 측면 센서 회전 각도
+    private bool avoiding = false;                                          // 회피 여부
+    private float targetSteerAngle = 0;                                     // 목표 조향각
+
 
     public float curSpeed = 0;              // 현재 속도
     private float maxSpeed = 100f;          // 최대 속도

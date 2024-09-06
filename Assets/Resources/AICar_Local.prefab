@@ -896,10 +896,9 @@ GameObject:
   - component: {fileID: 997039581493689186}
   - component: {fileID: 6713304330438737614}
   - component: {fileID: 8115410591525497845}
-  - component: {fileID: 351553131649039337}
-  - component: {fileID: 6651946734407312431}
+  - component: {fileID: 4026477024781348416}
   m_Layer: 0
-  m_Name: PlayerCar
+  m_Name: AICar_Local
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -966,7 +965,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edd0b14b8a954408488b0395e7fdcbca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &351553131649039337
+--- !u!114 &4026477024781348416
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -975,45 +974,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 3305141745315971083}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f46792cee8ff42fc8fb7b1b8e30e853, type: 3}
+  m_Script: {fileID: 11500000, guid: fe2d17e3047024c0a86180f4c3f4ccd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frontLeft_Col: {fileID: 8606992336158648626}
-  frontRight_Col: {fileID: 3701762065246153856}
-  rearLeft_Col: {fileID: 9061602530476138634}
-  rearRight_Col: {fileID: 3018324934760767341}
-  frontLeft_Model: {fileID: 6049457880262325621}
-  frontRight_Model: {fileID: 5572968312147692439}
-  rearLeft_Model: {fileID: 4893992445813888274}
-  rearRight_Model: {fileID: 6217394068167231186}
-  centerOfMass_var: {x: 0, y: -0.5, z: 0}
-  rb: {fileID: 0}
-  currentSpeed: 0
-  isBrake: 0
---- !u!114 &6651946734407312431
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3305141745315971083}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 2
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 351553131649039337}
-  - {fileID: 0}
-  sceneViewId: 0
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
+  path: {fileID: 0}
+  pathTransforms: []
+  pathList: []
+  FrontL: {fileID: 8606992336158648626}
+  FrontR: {fileID: 3701762065246153856}
+  BackL: {fileID: 9061602530476138634}
+  BackR: {fileID: 3018324934760767341}
+  FrontL_Tr: {fileID: 6049457880262325621}
+  FrontR_Tr: {fileID: 5572968312147692439}
+  BackL_Tr: {fileID: 4893992445813888274}
+  BackR_Tr: {fileID: 6217394068167231186}
+  curSpeed: 0
 --- !u!1 &3325250065133787404
 GameObject:
   m_ObjectHideFlags: 0
@@ -1177,10 +1152,10 @@ Light:
   m_GameObject: {fileID: 6125925070766667206}
   m_Enabled: 1
   serializedVersion: 10
-  m_Type: 0
+  m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 0.37877145, b: 0, a: 1}
-  m_Intensity: 0.5
+  m_Intensity: 1
   m_Range: 50
   m_SpotAngle: 100
   m_InnerSpotAngle: 1
@@ -1190,7 +1165,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
+    m_Bias: 0.065
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -1213,7 +1188,7 @@ Light:
     m_UseCullingMatrixOverride: 0
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
-  m_Flare: {fileID: 0}
+  m_Flare: {fileID: 12100000, guid: 9bdb18c49d114cb4300035184241aa39, type: 2}
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
@@ -1624,10 +1599,10 @@ Light:
   m_GameObject: {fileID: 7374630219965148670}
   m_Enabled: 1
   serializedVersion: 10
-  m_Type: 0
+  m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 0.37877145, b: 0, a: 1}
-  m_Intensity: 0.5
+  m_Intensity: 1
   m_Range: 50
   m_SpotAngle: 100
   m_InnerSpotAngle: 1
@@ -1637,7 +1612,7 @@ Light:
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
+    m_Bias: 0.065
     m_NormalBias: 0.4
     m_NearPlane: 0.2
     m_CullingMatrixOverride:
@@ -1660,7 +1635,7 @@ Light:
     m_UseCullingMatrixOverride: 0
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
-  m_Flare: {fileID: 0}
+  m_Flare: {fileID: 12100000, guid: 9bdb18c49d114cb4300035184241aa39, type: 2}
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
